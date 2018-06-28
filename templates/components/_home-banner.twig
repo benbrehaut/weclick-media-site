@@ -1,0 +1,35 @@
+{#
+ # Component: Home Banner
+ # -------------------
+ #
+ #}
+
+ {% set headerColour = 'primary' %}
+<header class="js-component component component--home-banner" data-header-colour="light">
+  <div class="home-banner u-text-c">
+    <section class="home-banner__inner home-banner__group">
+      <h1 class="home-banner__heading">
+        <em class="heading-3 home-banner__top-headline js-home-banner-text" data-animate-text="{{ component.topHeading }}" data-animate-delay="0">
+          <span class="js-home-banner-inner">
+            {{ component.topHeading }}
+          </span>
+        </em>
+        <span class="home-banner__headline">
+          <span class="home-banner__word js-home-banner-text" data-animate-text="Experience" data-animate-delay="225"><span class="home-banner__inner js-home-banner-inner">{{ component.secondLineFirstWord }}</span>
+          </span><span class="home-banner__word js-home-banner-text" data-animate-text="Engineered" data-animate-delay="975"><span class="home-banner__inner js-home-banner-inner">{{ component.secondLineSecondWord }}</span>
+          </span>
+        </span>
+      </h1>
+      <h2 class="home-banner__tagline">
+      <span class="js-home-banner-text">{{ component.tagline }}</span></h2>
+    </section>
+
+    <span class="home-banner__guide home-banner__guide-y"></span>
+    <span class="home-banner__guide home-banner__guide-x"></span>
+
+    <button type="button" class="js-home-scroll-down home-banner__cta" title="Scroll to content">
+      <span class="home-banner__dot"></span>
+      Scroll Down
+    </button>
+  </div>
+</header>

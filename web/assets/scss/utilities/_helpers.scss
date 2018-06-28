@@ -1,0 +1,195 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Utilities: _helpers
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Accessability
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.u-element-hidden {
+  @include element-invisible;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Generate show only classes
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@each $show-only in $breakpoint-classes {
+  .u-show-only--#{$show-only} {
+    display: none;
+  }
+}
+
+.u-show-only--small {
+  @include breakpoint(small only) {
+    display: block;
+  }
+}
+
+.u-show-only--medium {
+  @include breakpoint(medium only) {
+    display: block;
+  }
+}
+
+.u-show-only--large {
+  @include breakpoint(large only) {
+    display: block;
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Text Alignment Helpers
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.u-text-caps {
+  text-transform: uppercase;
+}
+
+.u-text-l {
+  text-align: left;
+}
+
+.u-text-c {
+  text-align: center;
+}
+
+.u-text-r {
+  text-align: right;
+}
+
+.u-unstyled-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Animations
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.u-anim {
+  opacity: 0;
+  visibility: hidden;
+	animation-duration: 800ms;
+	animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.285, 0.105, 0.465, 1.015);
+}
+
+.u-anim-up {
+  opacity: 1;
+  visibility: visible;
+  animation-name: anim-fade-in-up;
+}
+
+.u-anim-fadein {
+  opacity: 1;
+  visibility: visible;
+  animation-name: anim-fade-in;
+}
+
+@keyframes anim-fade-in-up {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 30px, 0)
+	}
+	100% {
+		opacity: 1;
+		transform: none
+	}
+}
+
+@keyframes anim-fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}  
+}
+
+// Animations (MF) 
+@keyframes drawWidth { 
+  0% { 
+      max-width: 0 
+  } 
+ 
+  100% { 
+      max-width: 100vw 
+  } 
+} 
+ 
+@keyframes drawHeight { 
+  0% { 
+    max-height: 0 
+  } 
+ 
+  100% { 
+    max-height: 100vh 
+  } 
+} 
+ 
+@keyframes slideCircle { 
+  0%, 100% { 
+      top: -20rem; 
+      width: 1rem; 
+      height: 1rem; 
+      opacity: 0 
+  } 
+ 
+  10% { 
+      opacity: 0.5 
+  } 
+ 
+  20%, 99.99% { 
+      top: -5rem; 
+      opacity: 0; 
+      width: 0.5rem; 
+      height: 0.5rem 
+  } 
+} 
+ 
+@keyframes fadeInH2 { 
+  to { 
+      transform: translateY(0%); 
+      opacity: 1 
+  } 
+} 
+ 
+@keyframes fadeIn { 
+  to { 
+      opacity: 1 
+  } 
+}
+
+@keyframes drawGuideTop {
+  from {
+    width: 460%
+  }
+  to {
+    width: 1000%;
+  }
+}
+
+@keyframes drawGuideLeft {
+  from {
+    height: 0%
+  }
+  to {
+    height: calc(100% + 4rem);
+  }  
+}
+
+@keyframes drawGuideRight {
+  from {
+    height: 0%
+  }
+  to {
+    height: calc(100% + 4rem);
+  }  
+}
+
+@keyframes drawGuideBottom {
+  from {
+    left: 500%
+  }
+  to {
+    left: -500%;
+  }
+}

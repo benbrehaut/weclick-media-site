@@ -1,0 +1,17 @@
+{#
+ # Component: Content Image
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.addDivider %}
+<div class="js-component component component--divider" data-header-colour="dark">
+  <div class="divider" aria-hidden="true">
+    <div class="divider__wrap">
+      <span class="divider__line"></span>
+    </div>
+  </div>
+</div>
+{% endif %}

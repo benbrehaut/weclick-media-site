@@ -1,0 +1,36 @@
+{#
+ # Component: Case Studies
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.showRecentFourCaseStudies %}
+  <div class="js-component component component--case-studies" data-header-colour="opac">
+    <div class="case-studies-list js-case-studies-wrap">
+      {% for case in craft.entries.section('caseStudies').orderBy('postDate desc').all() %}
+        <article class="js-case-studies-item case-studies-list__study case-studies-list__study--delay-{{ loop.index }} u-anim u-anim-fadein" role="article">
+          <a href="{{ case.url }}" class="case-studies-case">
+            {% if case.caseImage|length %}
+              <img src="{{ case.caseImage.one().getUrl() }}" alt="{{ case.title }}" width="{{ case.caseImage.one().width() }}" height="{{ case.caseImage.one().height() }}" class="case-studies-case__bgImage">
+            {% endif %}
+            <div class="case-studies-case__logo">
+              <img src="{{ case.clientLogo.one().getUrl() }}" alt="{{ case.title }}" width="{{ case.clientLogo.one().width() }}" height="{{ case.clientLogo.one().height() }}">
+            </div>
+            <div class="case-studies-case__content">
+              {{ macros.heading(2, case.title, 'heading-3 case-studies-case__heading') }}
+              {% if case.headline|length %}
+                <p>{{ case.headline }}</p>
+              {% endif %}
+              <span class="case-studies-case__cta">
+                See case study
+                <span class="case-studies-case__icon" aria-hidden="true"></span>
+              </span>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

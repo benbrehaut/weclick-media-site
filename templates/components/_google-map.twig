@@ -1,0 +1,18 @@
+{#
+ # Component: Google Map
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+{% set googleMap = true %}
+
+{% if component.map %}
+<div class="js-component component component--google-map" data-header-colour="dark">
+  <div id="js-google-map" class="google-map"></div>
+</div>
+{% endif %}
+
+{# Google Maps Script #}
+  {% do view.registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyDJW_QtApWcjcj9DS9hy3Pf-2gyzT3PkY8') %}
+{# /Google Maps Script #}

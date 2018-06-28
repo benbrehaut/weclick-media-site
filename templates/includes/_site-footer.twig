@@ -1,0 +1,110 @@
+{% import "macros/_macros" as macros %}
+
+<footer id="footer" class="site-footer" role="contentinfo">
+
+  <section class="site-footer-newsletter">
+    <div class="site-footer__row site-footer-newsletter__group">
+    
+      <div class="site-footer-newsletter__col">
+        <h2 class="heading-4 site-footer-newsletter__heading">
+          {{ globalSettings.newsletterSignupTitle }}
+        </h2>
+      </div>
+
+      <div class="site-footer-newsletter__col">
+        <form action="https://media.us12.list-manage.com/subscribe/post?u=280b84aae51fc197388b07999&amp;id=b7836173e6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="site-footer-newsletter__form" target="_blank">
+          <div class="site-footer-newsletter__field">
+            <label for="mce-EMAIL" class="u-element-hidden">{{ globalSettings.newsletterSignupTitle }}</label>
+            <input type="email" placeholder="Enter your email" name="EMAIL" id="mce-EMAIL" required class="input-field site-footer-newsletter__input">
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_280b84aae51fc197388b07999_b7836173e6" tabindex="-1" value="">
+            </div>
+          </div>
+          <div class="site-footer-newsletter__action">
+            <button type="submit" class="btn btn--primary">
+              Sign Up
+              <span class="btn__icon">
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  {# For some reason, if not returns always false, so nothing would get shown #}
+  {% if craft.app.request.getUrl() == '/contact' %}
+  {% else %}
+    <section class="site-footer-cta u-text-c">
+      <div class="site-footer-cta__group">
+        <h2 class="site-footer-cta__heading">{{ globalSettings.projectInMindTitle }}</h2>
+
+        {{ macros.button(globalSettings.projectInMindCtaText, 'accent', globalSettings.projectInMindCtaUrl) }}
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="site-footer-footer">
+    <div class="site-footer__row">
+      <div class="site-footer__col">
+        {{ macros.logo('000') }}
+        <p>{{ globalSettings.tagline }}</p>
+      </div>
+      <nav class="site-footer__col" role="navigation" aria-label="Contact Details">
+        <div class="site-footer__heading">
+          {{ macros.subHeading('4', 'Location', 'primary', 'site-footer__heading') }}
+        </div>
+
+        {% if globalSettings.location %}
+          <address>
+            {{ globalSettings.location|nl2br }}
+          </address>
+        {% endif %}
+
+        {% if globalSettings.phoneNumber1 %}
+          <div>
+            <a href="tel:{{ globalSettings.phoneNumber1 }}">{{ globalSettings.phoneNumber1 }}</a>
+          </div>
+        {% endif %}
+        {% if globalSettings.phoneNumber2 %}
+          <div>
+            <a href="tel:{{ globalSettings.phoneNumber2 }}">{{ globalSettings.phoneNumber2 }}</a>
+          </div>
+        {% endif %}
+      </nav>
+      <nav class="site-footer__col" role="navigation" aria-label="Useful Links">
+        {{ macros.subHeading('4', 'Links', 'primary', 'site-footer__heading') }}
+
+        {% if globalSettings.footerLinks %}
+          <ul class="unstyled-list">
+            {% for link in globalSettings.footerLinks.all() %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </nav>
+      <nav class="site-footer__col" role="navigation" aria-label="Social Media Links">
+        {{ macros.subHeading('4', 'Social', 'primary', 'site-footer__heading') }}
+
+        <ul class="u-unstyled-list">
+          {% if socialMedia.facebookUrl %}
+            <li><a href="{{ socialMedia.facebookUrl }}" target="_blank" rel="noopener" title="View our Facebook (New Window)">Facebook</a></li>		
+          {% endif %}
+          {% if socialMedia.twitterUrl %}
+            <li><a href="{{ socialMedia.twitterUrl }}" target="_blank" rel="noopener" title="View our Twigger (New Window)">Twitter</a></li>
+          {% endif %}
+          {% if socialMedia.instagramUrl %}
+            <li><a href="{{ socialMedia.instagramUrl }}" target="_blank" rel="noopener" title="View our Instagram (New Window)">Instagram</a></li>
+          {% endif %}
+          {% if socialMedia.linkedinUrl %}
+            <li><a href="{{ socialMedia.linkedinUrl }}" target="_blank" rel="noopener" title="View our linkedIn (New Window)">LinkedIn</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </section> 
+
+</footer>

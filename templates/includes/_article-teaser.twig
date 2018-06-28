@@ -1,0 +1,22 @@
+<article class="article-teaser article-teaser--{{ articleSize }} js-inview" role="article">
+  <a href="{{ article.url|e }}" class="article-teaser__link">
+    {% if article.featuredImage|length%}
+      <div class="article-teaser__preview">
+
+        {% if lazyLoading == true %}
+          <img data-src="{{ article.featuredImage.one().getUrl('articleTeaser') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ article.featuredImage.one().getWidth('articleTeaser') }}" height="{{ article.featuredImage.one().getHeight('articleTeaser') }}" alt="{{ article.featuredImage.one().title }}" class="js-lazyload">
+          <noscript><img src="{{ article.featuredImage.one().getUrl('articleTeaser') }}" width="{{ article.featuredImage.one().getWidth('articleTeaser') }}" height="{{ article.featuredImage.one().getHeight('articleTeaser') }}" alt="{{ article.featuredImage.one().title }}"></noscript>
+        {% else %}
+          <img src="{{ article.featuredImage.one().getUrl('articleTeaser') }}" width="{{ article.featuredImage.one().getWidth('articleTeaser') }}" height="{{ article.featuredImage.one().getHeight('articleTeaser') }}" alt="{{ article.featuredImage.one().title }}">
+        {% endif %}
+        
+      </div>
+    {% endif %}
+
+    {% for category in article.selectCategory.all() %}
+      <span class="sub-heading sub-heading--secondary article-teaser__cat">{{ category }}</span>
+    {% endfor %}
+    
+    <h3 class="heading-5 article-teaser__heading">{{ article.title }}</h3>
+  </a>
+</article>

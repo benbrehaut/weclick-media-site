@@ -1,0 +1,100 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% set metaTitle = entry.metaTitle %}
+{% set title = entry.title %}
+{% set metaDescription = entry.metaDescription %}
+{% if entry.metaBanner|length %}
+	{% set metaBanner = entry.metaBanner.one().getUrl() %}
+{% endif %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+
+	{% for component in entry.selectComponents.all() %}
+
+		{% if component.type == "heroBanner" %}
+
+			{% include 'components/_hero-banner' %}
+
+		{% elseif component.type == "generalContent" %}
+
+			{% include 'components/_general-content' %}
+
+		{% elseif component.type == "masonryGrid" %}
+
+			{% include 'components/_masonry-grid' %}
+
+		{% elseif component.type == "contentImage" %}
+
+			{% include 'components/_content-image' %}
+
+		{% elseif component.type == "itemList" %}
+
+			{% include 'components/_item-list' %}
+
+		{% elseif component.type == "video" %}
+
+			{% include 'components/_video' %}
+
+		{% elseif component.type == "pagePreview" %}
+
+			{% include 'components/_page-preview' %}
+
+		{% elseif component.type == "teamList" %}
+
+			{% include 'components/_team-list.twig' %}
+
+		{% elseif component.type == "caseStudySelection" %}
+
+			{% include 'components/_case-study-selection.twig' %}
+
+		{% elseif component.type == "recentArticles" %}
+
+			{% include 'components/_recent-articles.twig' %}
+
+		{% elseif component.type == "caseStudies" %}
+
+			{% include 'components/_case-studies.twig' %}
+
+		{% elseif component.type == "homeBanner" %}
+
+			{% include 'components/_home-banner.twig' %}
+
+		{% elseif component.type == "addressBlock" %}
+
+			{% include 'components/_address-block.twig' %}
+
+		{% elseif component.type == "contactForm" %}
+
+			{% include 'components/_contact-form.twig' %}
+
+		{% elseif component.type == "processes" %}
+
+			{% include 'components/_processes.twig' %}
+
+		{% elseif component.type == "divider" %}
+
+			{% include 'components/_divider.twig' %}
+
+		{% elseif component.type == "googleMap" %}
+
+			{% include 'components/_google-map.twig' %}
+
+		{% endif %}
+
+	{% endfor %}
+{% endblock %}

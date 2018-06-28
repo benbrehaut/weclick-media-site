@@ -1,0 +1,27 @@
+{#
+ # Component: Processes
+ # -------------------
+ #
+ #}
+{% import "macros/_macros" as macros %}
+
+{% if component.showProcesses %}
+<div class="js-component component component--processes-list" data-header-colour="light">
+  <div class="processes-list">
+    {% for process in craft.entries.section('processes').orderBy('postDate desc').all() %}
+      <article class="processes-list__item " role="article">
+        <a href="{{ process.url }}" class="processes-list__process">
+          <div class="processes-list__title processes-list__title--delay-{{ loop.index }} u-anim u-anim-fadein">
+            {{ macros.heading(2, process.title, 'heading-3') }}
+          </div>
+
+          <span class="processes-list__cta">
+            Read More
+            <span class="processes-list__icon" aria-hidden="true"></span>
+          </span>
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,36 @@
+{#
+ # Component: Team List
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.showTeamMembers %}
+<div class="js-component component component--team-list" data-header-colour="dark">
+  <div class="team-list">
+    {% for member in craft.entries.section('teamMembers').all() %}
+      {% set memberPhoto = member.photo.one() %}
+
+      <div class="team-list__member js-team-member {% if memberPhoto is empty %}team-list__member--no-image{% endif %}">
+        <a href="{{ member.url }}" data-slug="{{ member.slug }}" class="js-ajax-load-content team-list__group js-inview" {% if memberPhoto|length %}style="background-image: url({{ memberPhoto.getUrl('teamMemberSmall') }}"{% endif %}>
+          <div class="team-list__info">
+            {{ macros.subHeading(3, member.jobRole, 'secondary') }}
+            {{ macros.heading(4, member.title, 'heading-5 team-list__name') }}
+
+            <div class="team-list__cta">
+              <span class="btn btn--accent">
+                Read More
+                <span class="btn__icon"></span>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    {% endfor %}
+
+    <div class="js-ajax-area"></div>
+  </div>
+</div>
+{% endif %}

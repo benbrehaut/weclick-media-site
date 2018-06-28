@@ -1,0 +1,129 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+ 
+{% import "macros/_macros" as macros %}
+
+{% set title = entry.title %}
+{% set metaTitle = entry.metaTitle %}
+{% set metaDescription = entry.metaDescription %}
+{% if entry.metaBanner|length %}
+	{% set metaBanner = entry.metaBanner.one().getUrl() %}
+{% endif %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+	<header class="insights-banner">
+		<div class="insights-banner-top">
+
+			<div class="insights-banner-top__heading">
+				<h1 class="insights-banner-top__title">{{ entry.title }}</h1>
+			</div>
+			<form action="{{ url('articles/results') }}" class="insights-banner-top__search js-insights-search">
+				<div class="insights-banner-top__field">
+					<input type="search" name="q" required placeholder="Search by keyword or phrase..." class="insights-banner-top__input js-insights-search-field">
+					<button type="submit" class="insights-banner-top__btn js-insights-search-submit" disabled>
+						<span class="u-element-hidden">Search for Articles</span>
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="20">
+								<use fill="#FFF" xlink:href="#path29_fill"/>
+								<defs>
+									<path id="path29_fill" d="M8.172 15.565c1.993 0 3.805-.673 5.218-1.812l6.342 6.04a.744.744 0 0 0 .525.207c.2 0 .38-.069.526-.207a.685.685 0 0 0 0-1l-6.342-6.04c1.178-1.347 1.902-3.09 1.902-4.97C16.343 3.486 12.683 0 8.172 0 3.678 0 0 3.503 0 7.783c0 4.296 3.678 7.782 8.172 7.782zm0-14.15c3.696 0 6.686 2.865 6.686 6.368 0 3.52-2.99 6.367-6.686 6.367-3.697 0-6.686-2.864-6.686-6.367s3.008-6.368 6.686-6.368z"/>
+								</defs>
+							</svg>
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="insights-banner-articles">
+			{% for article in craft.entries.section('articles').limit('4').all() %}
+
+				{% if loop.index == '1' %}
+					<article class="insights-banner-articles__article u-anim u-anim-fadein">
+						<a href="{{ article.url }}" class="insights-banner-article insights-banner-article--lrg">
+							{% if article.featuredImage|length %}
+								<div class="insights-banner-article__image" style="background-image: url({{ article.featuredImage.one().getUrl() }})"></div>
+							{% endif %}
+
+							<div class="insights-banner-article__content">
+								{% for category in article.selectCategory.all() %}
+									<span class="sub-heading sub-heading--secondary insights-banner-article__meta">{{ category }}</span>
+								{% endfor %}
+								<h3 class="insights-banner-article__heading">{{ article.title }}</h3>
+							</div>
+						</a>
+					</article>
+				{% else %}
+					<article class="insights-banner-articles__article u-anim u-anim-fadein">
+						<a href="{{ article.url }}" class="insights-banner-article">
+							{% if article.featuredImage|length %}
+								<div class="insights-banner-article__image">
+									<img src="{{ article.featuredImage.one().getUrl('blogSmallTeaser') }}" alt="{{ article.title }}" width="{{ article.featuredImage.one().getWidth('blogSmallTeaser') }}" height="{{ article.featuredImage.one().getHeight('blogSmallTeaser') }}">
+								</div>
+							{% endif %}
+
+							<div class="insights-banner-article__content">
+								{% for category in article.selectCategory.all() %}
+									<span class="sub-heading sub-heading--secondary insights-banner-article__meta">{{ category }}</span>
+								{% endfor %}
+								<h3 class="insights-banner-article__heading">{{ article.title }}</h3>
+							</div>
+						</a>
+					</article>
+				{% endif %}
+
+			{% endfor %}
+		</div>
+
+	</header>
+
+	{# Categories #}
+		<div class="js-all-cats insights-banner-cats">
+			<div class="insights-banner-cats__actionBar">
+				<button class="js-toggle-insights-filter-list insights-banner-cats__btn" role="button">
+					<h2 class="sub-heading sub-heading--primary insights-banner-cats__title">Filter by</h2>
+
+					<span class="insights-banner-cats__icon" aria-hidden="true"></span>
+				</button>
+			</div>
+			<ul class="insights-banner-cats__group unstyled-list js-insights-cats-list">
+				<li class="insights-banner-cats__cat">
+					<a href="{{ globalSettings.blogPage.one.url() }}" data-slug="all" class="js-filter-article is-active">
+						All
+					</a>
+				</li>
+				{% cache %}
+					{% for cat in craft.categories.group('articles').all() %}
+						<li class="insights-banner-cats__cat">
+							<a href="{{ cat.url }}" data-slug="{{ cat.slug }}" class="js-filter-article">
+								{{ cat.title }}
+							</a>
+						</li>
+					{% endfor %}
+				{% endcache %}
+			</ul>
+		</div>
+	{# /Categories #}
+
+	{# Articles #}
+		<div class="insights-articles">
+			<div class="insights-articles__row js-load-articles">
+				{% for article in craft.entries.section('articles').all() %}
+					{% include 'includes/_article-teaser' with {'article': article, 'articleSize': 'third article-teaser--big js-article', lazyLoading: false } %}
+				{% endfor %}
+			</div>
+		</div>	
+	{# /Articles #}
+{% endblock %}

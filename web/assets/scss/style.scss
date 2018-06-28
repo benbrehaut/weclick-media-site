@@ -1,0 +1,106 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// WCM Site
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Charset
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@charset 'utf-8';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Settings
+// Variables and site settings live here
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'settings/unit',
+        'settings/variables';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Tools
+// Contains functions / mixins to be used, it does not output any code.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'tools/value',
+        'tools/selector',
+        'tools/flex',
+        'tools/breakpoint',
+        'tools/mixins';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Vendor
+// 3rd Party Files (Ideally this should be very low)
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'vendor/prism';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Base
+// Very broad area of styling.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'base/reset',
+        'base/fonts',
+        'base/base';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Layout
+// Contains all the information for the grid.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'layout/row',
+        'layout/column',
+        'layout/size',
+        'layout/position',
+        'layout/gutter',
+        'layout/classes',
+        'layout/layout',
+        'layout/flex-grid',
+        'layout/grid';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Objects
+// Objects are designed patterns, from a pattern library or very inique items such as buttons, typography etc. Changing these will affect major parts of the site.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'objects/typography',
+        'objects/site-header',
+        'objects/guides',
+        'objects/site-navigation',
+        'objects/site-footer',
+        'objects/article-teaser',
+        'objects/buttons',
+        'objects/book-layout',
+        'objects/lists',
+        'objects/light-box',
+        'objects/skip-to-content';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Components
+// Specific User Interface parts live here.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'components/hero-banner',
+        'components/home-banner',
+        'components/recent-articles',
+        'components/general-content',
+        'components/content-image',
+        'components/page-preview',
+        'components/item-list',
+        'components/team-members',
+        'components/video',
+        'components/contact-form',
+        'components/address-block',
+        'components/processes',
+        'components/google-map',
+        'components/divider',
+        'components/case-study-selection',
+        'components/masonry-grid',
+        'components/case-studies';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Containers
+// Specific parts of the site (Services, Blog) etc live here.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'containers/service',
+        'containers/article',
+        'containers/404',
+        'containers/insights';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Utilities
+// Utilities / helpers which are used throughout the site. This is very specific code bits.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+@import 'utilities/helpers';

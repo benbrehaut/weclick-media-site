@@ -1,0 +1,115 @@
+{% import "macros/_macros" as macros %}
+
+<div class="js-site-navigation-window site-navigation-window" style="display: none;" tabindex="2" aria-hidden="true" aria-label="Site Navigation Menu">
+  <div class="site-navigation-window__inner">
+
+    {# Left Side #}
+      <div class="site-navigation-window__col site-navigation-window__left">
+        <nav class="site-nav" role="navigation" aria-label="Site Links">
+          <ul class="site-nav__menu u-unstyled-list">
+            {% for navItem in globalSettings.navigation.all() %}
+              <li class="site-nav__item {% if url(craft.app.request.pathInfo) == navItem.url %}is-active{% endif %}">
+                <a href="{{ navItem.url }}" class="site-nav__link">{{ navItem.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+        <nav role="navigation" aria-label="Social Media Links">
+          <ul class="u-unstyled-list social-list">
+            {% if socialMedia.facebookUrl %}
+              <li><a href="{{ socialMedia.facebookUrl }}" target="_blank" rel="noopener" title="View our Facebook (New Window)">Facebook</a></li>
+            {% endif %}
+            {% if socialMedia.twitterUrl %}
+              <li><a href="{{ socialMedia.twitterUrl }}" target="_blank" rel="noopener" title="View our Twitter (New Window)">Twitter</a></li>
+            {% endif %}
+            {% if socialMedia.instagramUrl %}
+              <li><a href="{{ socialMedia.instagramUrl }}" target="_blank" rel="noopener" title="View our Instagram (New Window)">Instagram</a></li>
+            {% endif %}
+            {% if socialMedia.linkedinUrl %}
+              <li><a href="{{ socialMedia.linkedinUrl }}" target="_blank" rel="noopener" title="View our LinkedIn (New Window)">LinkedIn</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    {# /Left Side #}
+
+    {# Right Side #}
+      <div class="site-navigation-window__col site-navigation-window__right">
+        <div class="site-navigation-window__wrap">
+          <div class="site-navigation-window__articles">
+            {% for article in craft.entries.section('articles').limit(2).all() %}
+              {% include 'includes/_article-teaser' with {'article': article, 'articleSize': 'half', lazyLoading: false } %}
+            {% endfor %}
+          </div>
+          <div class="site-navigation-window__form">
+            {{ macros.heading(2, 'Have a project in mind? Write to us!', 'heading-3') }}
+
+            <div class="u-element-hidden">
+              {% macro errorList(errors) %}
+                {% if errors %}
+                  <ul class="errors">
+                    {% for error in errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endmacro %}
+            </div>
+
+            {% from _self import errorList %}
+
+            <form method="post" action="" id="js-navigation-form" class="form-navigation" accept-charset="UTF-8">
+              {{ csrfInput() }}
+              <input type="hidden" name="action" value="contact-form/send">
+              {{ redirectInput('contact/thanks') }}
+
+              <div class="form-navigation__half">
+                <label for="from-first-name" class="u-element-hidden">Firstname</label>
+                <input id="from-first-name" class="form-navigation__input" required placeholder="Name" type="text" name="message[Name]" value="">
+              </div>
+
+              <div class="form-navigation__half">
+                <label for="from-surname" class="u-element-hidden">Surname</label>
+                <input id="from-surname" class="form-navigation__input" required placeholder="Surname" type="text" name="message[Surname]" value="">
+              </div>
+
+              <div class="form-navigation__half">
+                <label for="from-phone" class="u-element-hidden">Phone Number</label>
+                <input id="phone" class="form-navigation__input" required placeholder="Phone" type="tel" name="message[Phone]" value="">
+              </div>
+
+              <div class="form-navigation__half">
+                <label for="from-email" class="u-element-hidden">Email</label>
+                <input id="from-email" class="form-navigation__input" required placeholder="Email" type="email" name="fromEmail" value="{{ message.fromEmail ?? '' }}">
+              </div>
+
+              <div class="u-element-hidden" tabindex="-1">
+                <label for="weDontNo">Please leave this field blank</label>
+                <input id="weDontNo" name="weDontNo" type="text">
+              </div>
+
+              <div class="form-navigation__full">
+                <label for="message" class="u-element-hidden">Message</label>
+                <textarea id="message" class="form-navigation__input form-navigation__message" required placeholder="Message" name="message[body]">{{ message.message ?? '' }}</textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary">
+                Send Message
+                <span class="btn__icon"></span>
+              </button>
+
+              <p class="js-navigation-form-error form-navigation__error" role="alert">I'm afraid there are some errors with your submission, please check the form fields and try again.</p>
+
+            </form>
+
+            <div class="js-navigation-form-message form-navigation__success" role="alert">
+              <h3 class="heading-4">Thanks for your message</h3>
+              <p>We will get back to you as soon as possible.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {# /Right Side #}
+
+  </div>
+</div>

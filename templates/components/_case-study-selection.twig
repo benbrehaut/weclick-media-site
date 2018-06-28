@@ -1,0 +1,59 @@
+{#
+ # Component: Case Study Selection
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+<div class="js-component component component--case-study-selection" data-header-colour="light">
+  <div class="case-study-selection js-case-study-group js-inview">
+    <div class="case-study-selection__overlay"></div>
+    <div class="case-study-selection__dots">
+      {% cache %}
+        {% for caseStudy in component.selectCaseStudy.all() %}
+          <button class="js-select-case-study case-study-selection__dot {% if loop.index == '1' %}is-active{% endif %}" role="button" data-case-study="{{ caseStudy.slug }}">
+            <span class="u-element-hidden">Show information about {{ caseStudy.title }}</span>
+          </button>
+        {% endfor %}
+      {% endcache %}
+    </div>
+    
+    {% cache %}
+      {% for caseStudy in component.selectCaseStudy.all() %}
+        <div class="case-study-selection__image js-case-study-background {% if loop.index == '1' %}is-active{% endif %}" data-case-study="{{ caseStudy.slug }}" {% if caseStudy.previewBanner|length %}style="background: url({{ caseStudy.previewBanner.one().getUrl() }}), linear-gradient(0deg, rgba(0, 12, 36, 0.3), rgba(0, 12, 36, 0.3)), linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%); background-size: cover; background-repeat: no-repeat;background-position: center;"{% endif %}></div>  
+      {% endfor %}
+    {% endcache %}
+
+    <div class="case-study-selection__content">
+      {% cache %}
+        {% for caseStudy in component.selectCaseStudy.all() %}
+          <div class="case-study-selection__info js-case-study-info {% if loop.index == '1' %}is-active{% endif %}" data-case-study="{{ caseStudy.slug }}">
+
+            <img data-src="{{ caseStudy.clientLogo.one().getUrl() }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ caseStudy.clientLogo.one().width }}" height="{{ caseStudy.clientLogo.one().height }}" alt="{{ caseStudy.title }}" class="js-lazyload">
+
+            {{ macros.subHeading(3, caseStudy.title, 'secondary', 'case-study-selection__sub-heading') }}
+            {{ macros.heading(4, caseStudy.headline, 'heading-1 case-study-selection__title') }}
+
+            {{ macros.button('Read More', 'accent', caseStudy.url) }}
+          </div>
+        {% endfor %}
+      {% endcache %}
+
+      <div class="case-study-selection__logos js-inview">
+        {% cache %} 
+          {% for caseStudy in component.selectCaseStudy.all() %}
+            <a href="javascript:;" class="case-study-selection__logo js-select-case-study {% if loop.index == '1' %}is-active{% endif %}" data-case-study="{{ caseStudy.slug }}" title="Toggle to read about {{ caseStudy.title }}">
+              <img data-src="{{ caseStudy.clientLogo.one().getUrl() }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ caseStudy.clientLogo.one().width }}" height="{{ caseStudy.clientLogo.one().height }}" alt="{{ caseStudy.title }}" class="js-lazyload">
+            </a>
+          {% endfor %}
+        {% endcache %}
+      </div>
+
+      <a href="{{ globalSettings.caseStudiesPage.one.url() }}" class="case-study-selection__all" title="See all of our Case Studies">
+        All Case Studies
+        <span class="case-study-selection__icon" aria-hidden="true">
+        </span>
+      </a>
+    </div>
+  </div>
+</div>

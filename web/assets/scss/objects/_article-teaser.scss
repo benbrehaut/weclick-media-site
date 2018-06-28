@@ -1,0 +1,71 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Object: Article Teaser
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.article-teaser {
+  @include inView(800ms, 0);
+  margin-bottom: rem-calc(50);
+
+  @include breakpoint(small only) {
+    margin-bottom: rem-calc(25);
+  }
+
+  &__link {
+    text-decoration: none;
+
+    @include hocus() {
+      outline: none;
+      
+      img {
+        transform: scale(1.1);
+      }
+  
+      .article-teaser__heading {
+        color: $palette-quaternary;
+      }
+    }
+  }
+
+  &__preview {
+    overflow: hidden;
+  }
+
+  &__heading {
+    margin-top: rem-calc(14);
+    margin-bottom: rem-calc(0);
+    transition: all 0.5s ease;
+  }
+
+  img {
+    transition: all 0.5s ease;
+  }
+
+  @include breakpoint(small only) {
+    @include flex-grid-column(12);
+  }
+
+  &__cat {
+    display: block;
+    margin-top: rem-calc(19);
+  }
+
+  &--third {
+    @include flex-grid-column(4);
+
+    @include breakpoint(small only) {
+      @include flex-grid-column(12);
+    }
+  }
+
+  &--half {
+    @include flex-grid-column(6);
+    margin-bottom: 0;
+
+    .article-teaser__heading {
+      font-size: rem-calc(20);
+    }
+
+    @include breakpoint(small only) {
+      @include flex-grid-column(12);
+    }
+  }
+}

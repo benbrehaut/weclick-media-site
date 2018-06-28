@@ -1,0 +1,152 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Settings: _variables
+// Contains a number of variables which are used through out the site
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Color Variables
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Local Colors
+// These should only be referenced in this file
+// - - - - - - - -
+$midnight: #000C24 !default;
+$starship: #F2EB4C !default;
+$black: #000000 !default;
+$white: #FFF !default;
+$silver: #828282 !default;
+$light-grey: #F2F2F2 !default;
+
+$red: #b74a48 !default;
+$orange: #ffae00 !default;
+$green: #26b27b !default;
+
+// Global Colors
+// These should be used outside of this file
+// - - - - - - - -
+$palette-primary: $midnight;
+$palette-accent: $starship;
+$palette-secondary: $light-grey;
+$palette-tertiary: $white;
+$palette-quaternary: $silver;
+
+$palette-error: $red;
+$palette-warning: $orange;
+$palette-success: $green;
+
+$palette-heading: $midnight;
+$palette-paragraph: $black;
+$palette-anchor: inherit;
+
+$palette-border: $silver;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Typography
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+$global-font-size: 62.5%;
+$font-size-primary: rem-calc(18);
+
+// Font Sizes
+// - - - - - - - -
+$font-size-heading-one: rem-calc(75);
+$font-size-heading-two: rem-calc(48);
+$font-size-heading-three: rem-calc(36);
+$font-size-heading-four: rem-calc(24);
+$font-size-heading-five: rem-calc(22);
+$font-size-heading-six: rem-calc(20);
+$font-size-small: 80%;
+
+
+// Font Famlily
+// - - - - - - - -
+$font-family-normal: 'Lora', Arial, sans-serif;
+$font-family-secondary: 'Lato', Arial, sans-serif;
+
+
+// Line Heights
+// - - - - - - - -
+$line-height-base: 1.7 !default;
+$line-height-headings: 1.2 !default;
+
+// Forms
+// - - - - - - - -
+$global-form-input-border-color: $palette-border;
+$global-form-input-disabled-color: #e6e6e6;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Spacing
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+$spacing-default: rem-calc(35);
+$spacing-primary: rem-calc(20);
+$spacing-secondary: rem-calc(25);
+$spacing-tertiary: rem-calc(15);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Z Index index
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+$z-stack: site, heroOverlay, heroContent, backIcon, skipToContent, modal, teamPopup, siteHeader, mobileMenu, hamburger;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Misc Variables
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+$global-border-radius: 0.0rem;
+$global-box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
+$global-blend-mode: linear-gradient(0deg, rgba(0, 12, 36, 0.3), rgba(0, 12, 36, 0.3)), linear-gradient(0deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
+$global-transition: cubic-bezier(0.285, 0.105, 0.465, 1.015);
+$global-margin: calc(100vw * 0.05);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Layout & Grid
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+// Select the type of grid
+// 'normal' = flexbox, 'legacy' = float
+// - - - - - - - -
+$global-grid-select: 'normal';
+
+// Grid Width
+// - - - - - - - -
+$global-width: rem-calc(1340);
+
+$global-left: left;
+$global-right: right;
+
+
+// Breakpoint Sizes
+// Pixels are converted to Em
+// - - - - - - - -
+$breakpoints: (
+  small: 0,
+  medium: 640px,
+  large: 1065px,
+  xlarge: 1200px,
+  xxlarge: 1440px,
+) !default;
+
+$breakpoint-classes: (small medium large) !default;
+
+// The maximum width of a row.
+// - - - - - - - -
+$grid-row-width: $global-width;
+
+// The default column count of a grid. 
+// Changing this value affects the logic of the grid mixins, and the number of CSS classes output.
+// - - - - - - - -
+$grid-column-count: 12 !default;
+
+// The amount of space between columns at different screen sizes. 
+// To use just one size, set the variable to a number instead of a map.
+// Pixels are converted to Rem
+// - - - - - - - -
+$grid-column-gutter: (
+  small: 40px,
+  medium: 40px,
+) !default;
+
+// If `true`, the last column in a row will align to the opposite edge of the row.
+// - - - - - - - -
+$grid-column-align-edge: true;
+
+// The highest number of `.x-up` classes available when using the block grid CSS.
+// - - - - - - - -
+$block-grid-max: 8;

@@ -1,0 +1,166 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% set metaTitle = entry.metaTitle %}
+{% set title = entry.title %}
+{% set metaDescription = entry.metaDescription %}
+{% if entry.featuredImage|length %}
+	{% set metaBanner = entry.featuredImage.one().getUrl() %}
+{% endif %}
+
+{% set criteria = {section: 'services', orderBy: 'postDate'} %}
+{% set next = entry.getNext(criteria) %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+	<section class="article">
+    {# Article Header #}
+      <header class="article-header js-inview" {% if entry.featuredImage|length %}style="background-image: url('{{ entry.featuredImage.one().getUrl() }}');" {% endif %}>
+
+        {% if entry.featuredImage|length %}
+          <div class="article-header--overlay"></div>
+        {% endif %}
+
+        <div class="article-header__inner">
+          <div class="article-header__group">
+            <h2 class="sub-heading article-header__sub-heading">Insights</h2>
+            <h1 class="article-header__heading">{{ entry.title }}</h1>
+          </div>
+        </div>
+      </header>
+    {# /Article Header #}
+
+    <div class="article-content" itemprop="articleBody">
+      {% for component in entry.selectComponent.all() %}
+
+        {# General Content #}
+        {% if component.type == "articleContent" %}
+          <div class="article-content-copy js-inview">
+            <div class="article-content-wrap wysiwyg ">
+              {{ component.copy }}
+            </div>
+          </div>
+        {# /General Content #}
+
+        {# Code #}
+        {% elseif component.type == "code" %}
+          <div class="article-content article-content-code">
+            <div class="article-content-code__code">
+              <div class="article-content-code__snippet">
+                <pre><code class="language-{{ component.typeOfLanguage }}">{{ component.code|raw }}</code></pre>
+              </div>
+            </div>
+
+            {% if component.description|length %}
+              <div class="article-content-wrap">
+                <em class="article-content-code__desc">{{ component.description }}</em>
+              </div>
+            {% endif %}
+          </div>
+        {# Code #}
+
+        {# Image #}
+        {% elseif component.type == "image" %}
+          <div class="article-content-image js-inview">
+            <figure class="article-content-image__figure article-content-image__figure--{{ component.alignment }}">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ component.image.one().url() }}" alt="{{ component.image.one().title }}" width="{{ component.image.one().width }}" height="{{ component.image.one().height }}" class="js-lazyload">
+              {% if component.imageTitle|length %}
+                <figcaption class="article-content-image__title">{{ component.imageTitle }}</figcaption>
+              {% endif %}
+            </figure>
+          </div>
+        {% endif %}
+        {# /Image #}
+
+      {% endfor %}
+    </div>
+	</section>
+
+  {# <section class="article-comments">
+    <div class="article-comments__wrap">
+
+      <div class="article-comments-meta">
+        <span class="article-comments-meta__count">
+          3 Comments
+        </span>
+
+        <a href="javascript:void(0)" id="js-scroll-to-comment-box" class="article-comments-meta__comment">Leave a Comment</a>
+      </div>
+
+      <div class="article-comments__comments js-inview">
+        <div class="article-comments__comment">
+          <p>
+            Nunc et lacus at felis iaculis porttitor. Proin commodo lorem nec justo consequat, vitae sodales nibh tristique. Nulla sodales erat ligula, id tristique erat congue non.
+          </p>
+          <h3 class="heading-4 article-comments__commentor">Drew Peacock</h3>
+        </div>
+        <div class="article-comments__comment">
+          <p>
+            Nunc et lacus at felis iaculis porttitor. Proin commodo lorem nec justo consequat, vitae sodales nibh tristique. Nulla sodales erat ligula, id tristique erat congue non.
+          </p>
+          <p>
+            Commodo lorem nec justo consequat.
+          </p>
+          <h3 class="heading-4 article-comments__commentor">Ben Dover</h3>
+        </div>
+      </div>
+
+      <div class="article-comments-post js-inview">
+        <hr>
+        <h3 class="article-comments-post__heading">Join the conversation</h3>
+        <form action="#" id="js-comment-box">
+          <input type="text" placeholder="name" class="article-comments-post__input">
+          <input type="email" placeholder="email" class="article-comments-post__input">
+          <textarea placeholder="comment" class="article-comments-post__input article-comments-post__comment" value="">
+          </textarea>
+          <button type="submit" class="btn btn--accent">
+            Submit
+            <span class="btn__icon"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section> #}
+
+{% endblock %}
+
+{% block head %}
+  <script type="application/ld+json">
+  { 
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ entry.url }}"
+    },
+    "headline": "{{ entry.title }}",
+    "alternativeHeadline": "Insights",
+    "image": "{{ entry.featuredImage.one().getUrl() }}",
+    "author": "{{ siteName }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ siteName }}",
+      "logo": {
+        "@type": "imageObject",
+        "url": "{{ siteUrl }}assets/img/logo.png"
+      }
+    },
+    "datePublished": "{{ entry.postDate|date('Y-m-d H:i:s') }}",
+    "dateModified": "{{ entry.dateUpdated|date('Y-m-d H:i:s') }}",
+    "description": "{{ entry.metaDescription }}"
+  }
+  </script>
+{% endblock %}

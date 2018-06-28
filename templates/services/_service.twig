@@ -1,0 +1,68 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% set title = entry.title %}
+{% set metaTitle = entry.metaTitle %}
+{% set metaDescription = entry.metaDescription %}
+{% if entry.metaBanner|length %}
+	{% set metaBanner = entry.metaBanner.one().getUrl() %}
+{% endif %}
+
+{% set criteria = {section: 'services'} %}
+{% set next = entry.getNext(criteria) %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+	<div class="js-page">
+		<section class="js-lightbox lightbox">
+			<div class="lightbox__inner">
+			<a href="{{ craft.entries.id('76').one.getUrl() }}" class="lightbox__close">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14">
+					<use fill="#1A243A" transform="matrix(-1 0 0 1 20 1)" xlink:href="#path0_stroke"/>
+					<defs>
+						<path id="path0_stroke" d="M18 6l.733.68.632-.68-.632-.68L18 6zM0 7h18V5H0v2zm18.733-1.68l-5.572-6L11.696.68l5.571 6 1.466-1.36zm-1.466 0l-5.571 6 1.465 1.36 5.572-6-1.466-1.36z"/>
+					</defs>
+				</svg>
+			</a>
+
+			<div class="lightbox__image" {% if entry.serviceImage|length %}style="background-image: url('{{ entry.serviceImage.one().getUrl }}');" {% endif %}>
+			</div>
+
+			<div class="lightbox__content">
+				<div class="lightbox__info">
+					<h1 class="sub-heading sub-heading--secondary">Our Services</h1>
+					<h2>{{ entry.title }}</h2>
+					{{ entry.contentInfo }}
+				</div>
+
+				<div class="lightbox__pagination">
+					<div class="lightbox__next u-text-r">
+						{% if next|length %}
+							{{ macros.subHeading(3, 'Up Next', 'secondary lightbox__sub-heading') }}
+							<a href="{{ next.url }}" class="js-lightbox-next lightbox__link">{{ next.title }}<span class="lightbox__icon" aria-hidden="true"></span>
+							</a>
+						{% endif %}
+					</div>
+				</div>
+
+			</div>
+			
+			</div>
+		</section>
+	</div>
+{% endblock %}

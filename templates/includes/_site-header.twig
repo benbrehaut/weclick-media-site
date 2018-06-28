@@ -1,0 +1,22 @@
+{% import "macros/_macros" as macros %}
+
+<header id="header" class="site-header {% if entry is defined %} site-header--{{ entry.headerType }} {% endif %} js-site-header" role="banner">
+  <div class="site-header__row">
+    <div class="site-header__menu">
+      <button role="button" class="site-header-toggler js-toggle-menu" title="Open Site Navigation Menu" aria-expanded="false">
+        <span class="site-header-toggler__text">Menu</span>
+        <span class="hamburger-line hamburger-line--top" aria-hidden="true"></span>
+        <span class="hamburger-line hamburger-line--middle" aria-hidden="true"></span>
+        <span class="hamburger-line hamburger-line--bottom" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="site-header__logo">
+      <a href="/" rel="home" title="Go to {{ siteName }} homepage">
+        {{ macros.logo() }}
+      </a>
+    </div>
+  </div>
+
+  {% include 'includes/_site-navigation' %}
+</header>

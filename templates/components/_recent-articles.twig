@@ -1,0 +1,37 @@
+{#
+ # Component: Recent Articles
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.showRecentArticles %}
+<div class="js-component component component--recent-articles" data-header-colour="dark">
+  <div class="recent-articles" role="listitem">
+    <div class="recent-articles__row">
+      <div class="recent-articles__column">
+        <h2 class="heading-3 recent-articles__heading js-inview js-guide-text">
+          <span class="js-guide-text-inner">Our Recent Articles</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="recent-articles__row">
+      {% for article in craft.entries.section('articles').limit(3).all() %}
+        {% include 'includes/_article-teaser' with {'article': article, 'articleSize': 'third', lazyLoading: true } %}
+      {% endfor %}
+    </div>
+
+    <div class="recent-articles__row">
+      <div class="recent-articles__column u-text-r">
+        <a href="{{ globalSettings.blogPage.one.url() }}" class="recent-articles__all" title="See all of our articles">
+          All Articles
+          <span class="recent-articles__icon" aria-hidden="true">
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

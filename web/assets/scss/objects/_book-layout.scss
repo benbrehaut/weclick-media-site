@@ -1,0 +1,289 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Object: Book Layout
+// TODO: At some point, both this and book-layout should probably be merged into one.
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.book-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  // Row
+  &__row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+
+    &:first-of-type .book-layout__image {
+      @include breakpoint(small only) {
+        margin-top: rem-calc(80);
+      }
+    }
+  }
+
+  @include breakpoint(medium down) {
+    .book-layout__row:not(:first-of-type) .book-layout__title {
+      display: none;
+    }
+  }
+
+  // Image / Content
+  &__content,
+  &__image { 
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+    height: 100%;
+    min-height: 100vh;
+
+    @include breakpoint(medium down) {
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: none;
+      min-height: auto;
+    }
+  }
+
+  &__image {
+    @include background-img;
+    background-color: $palette-secondary;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    overflow: auto;
+
+    &.is-active {
+      opacity: 1;
+    }
+
+    @include breakpoint(medium down) {
+      height: rem-calc(300);
+      position: static;
+      opacity: 1 !important;
+    }
+  }
+
+  &__content {
+    padding-top: rem-calc(30);
+    padding-bottom: rem-calc(30);
+    padding-right: rem-calc(100);
+    position: relative;
+
+    @include breakpoint(medium down) {
+      height: auto;
+      padding: rem-calc(20);
+
+      // spacing for next link
+      &--last {
+        padding-bottom: rem-calc(80);
+      }
+    }
+  }
+
+  &__info {
+    margin-top: rem-calc(200);
+    margin-left: rem-calc(40);
+    max-width: rem-calc(500);
+
+    &--full {
+      max-width: none;
+      margin-right: rem-calc(76);
+    }
+
+    @include breakpoint(medium down) {
+      margin-top: rem-calc(0);
+      margin-right: rem-calc(0);
+      margin-left: rem-calc(0);
+      max-width: none;
+    }
+  }
+
+  // Back Button
+  &__back {
+    outline: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    position: fixed;
+    top: 125px;
+    left: 42px;
+    text-decoration: none;
+    z-index: 999;
+
+    @include breakpoint(medium down) {
+      top: 78px;
+      left: 35px;
+    }
+
+    @include breakpoint(small down) {
+      top: 95px;
+      left: 20px;
+      position: absolute;
+    }
+    
+    svg {
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    &:hover svg {
+      opacity: 0.5;
+      transform: translateX(-10px);
+    }
+  }
+
+  // Sub Heading
+  &__sub-heading {
+    font-size: rem-calc(10);
+    margin-bottom: rem-calc(5);
+  }
+
+  // Next Links
+  &__pagination {
+    position: absolute;
+    bottom: rem-calc(30);
+    right: rem-calc(40);
+
+    @include breakpoint(medium down) {
+      right: rem-calc(20);
+    }
+  }
+
+  &__next {
+    text-decoration: none;
+    display: block;
+    transition: all 400ms $global-transition;
+
+    @include hocus {
+      opacity: 0.5;
+
+      .book-layout__icon {
+        width: 30px;
+      }
+    }
+  }
+
+  &__link {
+    @include btnLink($palette-primary);
+  }
+
+  &__icon {
+    @include arrow-right($palette-primary);
+  }
+
+  // View Line
+  &__lines {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    direction: rtl;
+
+    @include breakpoint(medium down) {
+      display: none;
+    }
+  }
+
+  &__line {
+    padding-top: rem-calc(12);
+    padding-bottom: rem-calc(12);
+    width: 15px;
+    cursor: pointer;
+    will-change: width;
+    transition: all 200ms $global-transition;
+    border-radius: 10px;
+
+    span {
+      background-color: rgba($palette-primary, 0.6);
+      display: block;
+      width: 100%;
+      height: 2px;
+    }
+
+    &:hover {
+      width: 30px;
+
+      span {
+        background-color: $palette-primary;
+      }
+    }
+
+    &.is-active {
+      width: 30px;
+      
+      span {
+        background-color: $palette-primary;
+      }
+    }
+  }
+}
+
+// Scrolldown Arrow
+.book-layout-scrolldown {
+  @include btnLink($palette-primary);
+  position: fixed;
+  top: 25%;
+  right: -28px;
+  transform: rotate(90deg);
+  outline: none;
+  border: 0;
+  box-shadow: none;
+  background-color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all 400ms $global-transition;
+  display: inline-block;
+
+  &__icon {
+    @include arrow-right($palette-primary);
+  }
+
+  &.is-showing {
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Content part of Left Side of Book layout
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.book-layout-extra {
+  background-color: $palette-accent;
+
+  @include breakpoint(medium down) {
+    height: auto;
+    padding: rem-calc(20);
+  }
+
+  &__info {
+    margin-top: rem-calc(50);
+
+    @include breakpoint(medium down) {
+      margin-top: rem-calc(15);
+    }
+  }
+
+  &__heading {
+    margin-bottom: rem-calc(15);
+  }
+
+  &__subHeading {
+    margin-bottom: rem-calc(20);
+  }
+
+  &__block {
+    border-bottom: 1px dashed rgba($palette-primary, 0.3);
+    margin-bottom: rem-calc(24);
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Book Layout on Process Single
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+body.processes .book-layout__row:not(:first-of-type) .book-layout__image {
+  @include breakpoint(medium down) {
+    display: none;
+  }
+}

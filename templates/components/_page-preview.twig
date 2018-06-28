@@ -1,0 +1,23 @@
+{#
+ # Component: Page Preview
+ # -------------------
+ #
+ #}
+ {% import "macros/_macros" as macros %}
+ {% set pagePreviewBanner = component.bannerImage.one() %}
+<header class="js-component component component--page-preivew" data-header-colour="light">
+  <div class="js-inview page-preview {% if pagePreviewBanner|length %}page-preview--has-image{% endif %}" data-bg="{{ pagePreviewBanner.url() }}">
+    <div class="page-preview__inner">
+      <div class="page-preview__group">
+        {{ macros.subHeading(2, component.previewTitle, 'secondary', 'page-preview__sub-heading') }}
+        {{ macros.heading(3, component.previewHeadline, 'page-preview__heading') }}
+
+        {{ macros.button(component.ctaTitle, 'accent', component.ctaUrl) }}
+      </div>
+    </div>
+
+    {% if pagePreviewBanner|length %}
+      <div class="page-preview__overlay"></div>
+    {% endif %}
+  </div>
+</header>

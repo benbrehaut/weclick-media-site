@@ -1,0 +1,98 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+ 
+{% import "macros/_macros" as macros %}
+
+{% set title = entry.title %}
+{% set metaTitle = entry.metaTitle %}
+{% set metaDescription = entry.metaDescription %}
+{% if entry.metaBanner|length %}
+	{% set metaBanner = entry.metaBanner.one().getUrl() %}
+{% endif %}
+
+{% set criteria = {section: 'processes'} %}
+{% set next = entry.getNext(criteria) %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+	<h1 class="u-element-hidden">{{ entry.title }}</h1>
+	<div class="book-layout js-book-layout">
+		{# Back button #}
+			<a href="{{ globalSettings.processesPage.one.url() }}" class="book-layout__back">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14">
+					<use fill="#1A243A" transform="matrix(-1 0 0 1 20 1)" xlink:href="#path0_stroke"/>
+					<defs>
+						<path id="path0_stroke" d="M18 6l.733.68.632-.68-.632-.68L18 6zM0 7h18V5H0v2zm18.733-1.68l-5.572-6L11.696.68l5.571 6 1.466-1.36zm-1.466 0l-5.571 6 1.465 1.36 5.572-6-1.466-1.36z"/>
+					</defs>
+				</svg>
+			</a>
+		{# /Back button #}
+
+		{% for process in entry.processLayout.all() %}
+			<div class="book-layout__row">
+				{# Sidebar #}
+					<div class="js-book-layout-sidebar book-layout__image{% if loop.index == '1' %} is-active {% endif %}" {% if process.image|length %}style="background-image: url('{{ process.image.one().getUrl }}');"{% endif %}></div>
+				{# /Sidebar #}
+
+				{# Content #}
+					<div id="book-layout-{{ loop.index }}" class="js-book-layout-content book-layout__content {% if loop.last %}book-layout__content--last{% endif %} u-anim u-anim-fadein">
+						<div class="book-layout__info">
+							{% if loop.index == '1' %}
+								<h1 class="sub-heading sub-heading--secondary book-layout__title">{{ entry.title }}</h1>
+							{% else %}
+								<h2 class="sub-heading sub-heading--secondary book-layout__title">{{ entry.title }}</h2>
+							{% endif %}
+							<h3 class="heading-2">{{ process.heading }}</h3>
+							<h4 class="sub-heading sub-heading--primary">What</h4>
+							{{ process.theWhat }}
+
+							<h4 class="sub-heading sub-heading--primary">Who</h4>
+							<ul class="unstyled-list">
+								{% for row in process.theWho %}
+									<li>{{ row.person }}</li>
+								{% endfor %}
+							</ul>
+
+						</div>
+					</div>
+				{# /Content #}
+			</div>
+		{% endfor %}
+
+		<div class="book-layout__pagination">
+			{% if next|length %}
+				<a href="{{ next.url }}" class="book-layout__next u-text-r">
+					<h3 class="sub-heading sub-heading--secondary book-layout__sub-heading">Up Next</h3>
+					<span class="book-layout__link">
+						{{ next.title }}
+						<span class="book-layout__icon"></span>
+					</span>
+				</a>
+			{% endif %}
+		</div>
+
+		{% cache for 1 week %}
+			<div class="book-layout__lines" aria-hidden="true">
+				{% for process in entry.processLayout.all() %}
+					<div data-section="book-layout-{{loop.index}}" class="js-to-book-section book-layout__line">
+						<span></span>
+					</div>
+				{% endfor %}
+			</div>
+		{% endcache %}
+		
+	</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{#
+ # Component: Contact Form
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.showContactForm %}
+<div class="js-component component component--contact-form" data-header-colour="dark">
+  <div class="contact-form">
+    <div class="contact-form__row js-inview">
+      <form method="post" action="" class="js-contact-form contact-form__form js-inview" accept-charset="UTF-8">
+        {{ csrfInput() }}
+        <input type="hidden" name="action" value="contact-form/send">
+        {{ redirectInput('contact/thanks') }}
+
+          {{ macros.heading(2, component.contactFormHeading, 'heading-4') }}
+
+          <label for="from-name" class="u-element-hidden">Name</label>
+          <input id="from-name" required class="contact-form__field" placeholder="Name" type="text" name="message[Name]" value="">
+
+          <label for="from-phone" class="u-element-hidden">Telephone</label>
+          <input id="phone" required class="contact-form__field" placeholder="Telephone" type="tel" name="message[Phone]" value="">
+
+          <label for="from-email" class="u-element-hidden">Email</label>
+          <input id="from-email" required class="contact-form__field" placeholder="Email" type="email" name="fromEmail" value="{{ message.fromEmail ?? '' }}">
+
+          <label for="message" class="u-element-hidden">Message</label>
+          <textarea id="message" required class="contact-form__field contact-form__textarea" placeholder="Message" name="message[body]">{{ message.message ?? '' }}</textarea>
+
+          <div class="u-element-hidden" tabindex="-1">
+            <label>Please leave this field blank
+              <input id="weDontNo" name="weDontNo" type="text" title="Please leave this field blank">
+            </label>
+          </div>
+
+        <button type="submit" class="btn btn--primary">
+          Send Message
+          <span class="btn__icon"></span>
+        </button>
+
+        <p class="js-contact-form-error contact-form__error" role="alert">I'm afraid there are some errors with your submission, please check the form fields and try again.</p>
+
+        <div class="js-contact-form-message contact-form__success" role="alert">
+          <h3 class="heading-4">Thanks for your message</h3>
+          <p>We will get back to you as soon as possible.</p>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+{% endif %}

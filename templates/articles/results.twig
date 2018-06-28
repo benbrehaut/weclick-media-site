@@ -1,0 +1,70 @@
+{#
+ # Index template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+ 
+{% import "macros/_macros" as macros %}
+{% set metaTitle = 'Search' %}
+{% set headerColour = 'secondary' %}
+
+{# Search #}
+{% set query = craft.app.request.getParam('q') %}
+{% set entries = craft.entries.search(query).section('articles').orderBy('score') %}
+
+{% extends "includes/_layout" %}
+
+{% block content %}
+	<header class="insights-banner insights-banner--results">
+		<div class="insights-banner-top">
+
+			<div class="insights-banner-top__heading">
+				<h1 class="insights-banner-top__title">Search</h1>
+			</div>
+			<form action="{{ url('articles/results') }}" class="insights-banner-top__search js-insights-search">
+				<div class="insights-banner-top__field">
+					<input type="search" name="q" required value="{{ query }}" class="insights-banner-top__input js-insights-search-field">
+					<button type="submit" class="insights-banner-top__btn js-insights-search-submit" disabled>
+						<span class="u-element-hidden">Search for Articles</span>
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="20">
+								<use fill="#FFF" xlink:href="#path29_fill"/>
+								<defs>
+									<path id="path29_fill" d="M8.172 15.565c1.993 0 3.805-.673 5.218-1.812l6.342 6.04a.744.744 0 0 0 .525.207c.2 0 .38-.069.526-.207a.685.685 0 0 0 0-1l-6.342-6.04c1.178-1.347 1.902-3.09 1.902-4.97C16.343 3.486 12.683 0 8.172 0 3.678 0 0 3.503 0 7.783c0 4.296 3.678 7.782 8.172 7.782zm0-14.15c3.696 0 6.686 2.865 6.686 6.368 0 3.52-2.99 6.367-6.686 6.367-3.697 0-6.686-2.864-6.686-6.367s3.008-6.368 6.686-6.368z"/>
+								</defs>
+							</svg>
+					</button>
+				</div>
+			</form>
+		</div>
+
+	</header>
+
+  {% if entries|length %}
+    <div class="insights-articles insights-articles--search">
+
+      <div class="insights-articles__row">
+        {% for entry in entries.all() %}
+          {% include 'includes/_article-teaser' with {'article': entry, 'articleSize': 'third article-teaser--big', lazyLoading: true } %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="insights-articles">
+      <div class="insights-articles__row">
+				<div class="insights-articles__search">
+        	<p>Your search for "{{ query }}" didn’t return any results.</p>
+				</div>
+      </div>
+    </div>
+  {% endif %}
+	
+{% endblock %}

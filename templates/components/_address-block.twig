@@ -1,0 +1,39 @@
+{#
+ # Component: Address Block
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% if component.showAddressContactDetails %}
+  <div class="js-component component component--address-block" data-header-colour="dark">
+    <div class="address-block">
+      <div class="address-block__row">
+        <div class="address-block__details js-inview">
+
+          {% if globalSettings.emailAddress|length %}
+            {{ macros.subHeading(2, 'Email', 'secondary') }}
+            <p><a href="mailto:{{ globalSettings.emailAddress|e }}">{{ globalSettings.emailAddress }}</a></p>
+          {% endif %}
+
+          {% if globalSettings.phoneNumber1|length %}
+            {{ macros.subHeading(2, 'Call', 'secondary') }}
+            <p>
+              <a href="tel:{{ globalSettings.phoneNumber1 }}">{{ globalSettings.phoneNumber1 }}</a>
+              <br>
+              or
+              <br>
+              <a href="tel:{{ globalSettings.phoneNumber2 }}">{{ globalSettings.phoneNumber2 }}</a>
+            </p>
+          {% endif %}
+
+          {% if globalSettings.location|length %}
+            {{ macros.subHeading(2, 'Visit', 'secondary') }}
+            <address>{{ globalSettings.location|nl2br }}</address>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

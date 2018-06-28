@@ -1,0 +1,225 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Object: Site Navigation
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+.site-navigation-window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  @include breakpoint(medium down) {
+    background-color: $palette-accent;
+  }
+
+  &__inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  a {
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__col {
+    width: 50%;
+    height: 100%;
+    overflow: auto;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &__left {
+    padding: rem-calc(165 48 40);
+    background-color: $palette-accent;
+    transform: translateX(-100%);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+
+    @include breakpoint(medium down) {
+      width: 100%;
+      padding: rem-calc(80 40 40);
+    }
+
+    @include breakpoint(small only) {
+      padding: rem-calc(80 20 40);
+    }
+
+    a {
+      position: relative;
+  
+      &:before {
+        background: $palette-primary;
+        bottom: rem-calc(-3);
+        content: "";
+        height: 2px;
+        left: 0;
+        position: absolute;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform .3s cubic-bezier(.4,0,.2,1);
+        width: 100%;
+      }
+  
+      @include hocus {
+        outline: none;
+        
+        &:before {
+          transform: scalex(1);
+        }
+      }
+    }
+
+    .site-nav__item.is-active a:before {
+      transform: scalex(1);
+    }
+  }
+
+  &__right {
+    padding: rem-calc(20 36);
+    background-color: $palette-tertiary;
+    transform: translateX(100%);
+
+    @include breakpoint(medium down) {
+      display: none;
+    }
+  }
+  
+  &__articles {
+    display: flex;
+    margin-bottom: rem-calc(85)
+  }
+
+  &__form {
+    padding-left: rem-calc(16);
+    padding-right: rem-calc(16);
+    position: relative;
+  }
+
+  &__wrap {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.site-nav {
+  font-size: rem-calc(48);
+  color: $palette-primary;
+  flex: 1 0 100%;
+  width: 100%;
+
+  @include breakpoint(medium down) {
+    font-size: rem-calc(26);
+  }
+
+  a {
+    font-size: inherit;
+  }
+}
+
+.social-list {
+  margin-top: rem-calc(20) !important;
+  line-height: 1.8;
+}
+
+.form-navigation {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__half {
+    flex: 1 1 50%;
+    max-width: 50%;
+    margin-bottom: rem-calc(10);
+
+    &:nth-of-type(odd) {
+      padding-right: rem-calc(5);
+    }
+
+    &:nth-of-type(even) {
+      padding-left: rem-calc(5);
+    }
+  }
+
+  &__full {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: rem-calc(10);
+  }
+
+  &__field {
+    background-color: $palette-secondary;
+    border: 1px solid $palette-secondary;
+  }
+
+  &__input {
+    background-color: $palette-secondary;
+    border: 1px solid $palette-secondary;
+  }
+
+  &__message {
+    min-height: rem-calc(207);
+    resize: none;
+  }
+
+  &__error {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: opacity 0.2s ease-in-out;
+    margin-top: rem-calc(10);
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+  }
+
+  &__success {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $palette-tertiary;
+    padding: 1.6rem;
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: opacity 0.2s ease-in-out;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+  }
+}
+
+.site-nav--is-active {
+  overflow: hidden;
+
+  .site-navigation-window {
+    z-index: index($z-stack, mobileMenu);
+    visibility: visible;
+    opacity: 1;
+
+    .site-navigation-window__left,
+    .site-navigation-window__right {
+      transform: translateX(0%);
+      transition: transform 0.3s linear 0s;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{#
+ # Component: Content Image
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+<div class="js-component component component--content-image" data-header-colour="dark">
+  {% if component.alignment.label == 'Image Left Aligned' %}
+    <section class="content-image content-image--normal">
+
+      {# Title #}
+      <div class="content-image__row">
+        <div class="content-image__group">
+          <h2 class="heading-2 content-image__title js-inview js-guide-text">
+            <span class="js-guide-text-inner">{{ component.headline|nl2br }}</span>
+          </h2>
+        </div>
+      </div>
+      {# /Title #}
+
+      {# Content #}
+      <div class="content-image__row">
+        <div class="content-image__image">
+          {% if component.image|length %}
+            <img data-src="{{ component.image.one.getUrl() }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="js-lazyload js-inview" width="{{ component.image.one.width }}" height="{{ component.image.one.height }}" alt="{{ component.image.one.title }}">
+          {% endif %}
+        </div>
+        <div class="content-image__content wysiwyg js-inview">
+          {{ component.copy }}
+
+          {% if component.ctaUrl|length %}
+            <div class="content-image__cta">
+              {{ macros.button(component.ctaTitle, 'accent', component.ctaUrl) }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {# /Content #}
+    </section>
+  {% else %}
+    <section class="content-image content-image--reverse" data-header-colour="dark">
+      {# Title #}
+        <div class="content-image__row">
+          <div class="content-image__group">
+            <h2 class="heading-2 content-image__title js-inview js-guide-text">
+              <span class="js-guide-text-inner">{{ component.headline|nl2br }}</span>
+            </h2>
+          </div>
+        </div>
+      {# Title #}
+
+      {# Content #}
+        <div class="content-image__row">
+          <div class="content-image__content wysiwyg js-inview">
+            {{ component.copy }}
+      
+            {% if component.ctaUrl|length %}
+              <div class="content-image__cta">
+                {{ macros.button(component.ctaTitle, 'accent', component.ctaUrl) }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="content-image__image">
+            {% if component.image|length %}
+              <img data-src="{{ component.image.one.getUrl() }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="js-lazyload js-inview" width="{{ component.image.one.width }}" height="{{ component.image.one.height }}" alt="{{ component.image.one.title }}">
+            {% endif %}
+          </div>
+        </div>
+      {# Content #}
+    </section>
+  {% endif %}
+</div>

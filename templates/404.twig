@@ -1,0 +1,40 @@
+{#
+ # 404 template
+ # ------------
+ #
+ # This template is loaded whenever Craft cannot figure out how to
+ # respond to an incoming request. No setup is involved to get your
+ # 404 page working; you just need to call it 404.html and put it
+ # at the root of your craft/templates/ folder.
+ #
+ # You can also create 400.html, 403.html, 500.html, and 503.html
+ # templates if you’d like. If Craft can’t find an error template
+ # to match the error code, it will just use the one in
+ # craft/app/templates/ instead.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% import "macros/_macros" as macros %}
+
+{% extends "includes/_layout" %}
+{% set title = "404" %}
+
+{% block content %}
+	<div class="page-404">
+		<section class="general-content">
+			<div class="general-content__wrap wysiwyg js-inview">
+					<h1>Page not found</h1>
+					<p>What a kerfuffle! Let's try and get this sorted.</p>
+					<p>You appear to have caught us with our pants down. How embarrassing.</p>
+					<p>Let’s redirect you to the homepage and pretend like nothing happened.</p>
+					
+					<p>
+						{{ macros.button('Go back to home', 'accent', '/') }}
+					</p>
+
+			</div>
+		</section>
+	</div>
+{% endblock %}

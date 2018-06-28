@@ -1,0 +1,21 @@
+{#
+ # Component: Hero Banner
+ # -------------------
+ #
+ #}
+{% import "macros/_macros" as macros %}
+{% set headerColour = component.selectBackgroundColor %}
+
+<header class="js-component component component--hero-banner" data-header-colour="light">
+  <div class="hero-banner hero-banner--{{ component.selectBackgroundColor }} {% if component.heroImage|length %}hero-banner--has-image{% endif %}" {% if component.heroImage|length %}style="background-image: url({{ component.heroImage.one().getUrl() }})"{% endif %}>
+    <div class="hero-banner__inner">
+      <div class="hero-banner__group u-text-c">
+        {{ macros.subHeading(1, entry.title, 'secondary', 'hero-banner__sub-heading') }}
+        {{ macros.heading(2, component.headline, 'hero-banner__heading') }}
+      </div>
+      {% if component.heroImage|length %}
+        <div class="hero-banner__overlay"></div>
+      {% endif %}
+    </div>
+  </div>
+</header>

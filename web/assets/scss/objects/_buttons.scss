@@ -1,0 +1,120 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Object: _buttons
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Variables
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+$o-btn-disabled-bg-color: silver;
+$o-btn-disabled-text-color: black;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Standard Button
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.btn {
+  appearance: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: $global-border-radius;
+  display: inline-block;
+  text-decoration: none;
+  line-height: $line-height-base;
+  font-family: $font-family-secondary;
+  text-transform: uppercase;
+  font-size: rem-calc(12);
+  letter-spacing: rem-calc(1.5);
+  padding: rem-calc(16 58 16 20);
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  outline: none;
+
+  @include hocus {
+    .btn__icon {
+      width: 30px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    width: 18px;
+    height: 1px;
+    transition: 300ms ease;
+    will-change: width;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 10px;
+    }
+
+    &:before {
+      top: -3px;
+      right: -1px;
+      transform: rotate(40deg);
+    }
+
+    &:after {
+      top: 3px;
+      right: -1px;
+      transform: rotate(-40deg);
+    }
+  }
+
+  &[disabled] {
+    background-color: $o-btn-disabled-bg-color !important;
+    color: $o-btn-disabled-text-color !important;
+
+    @include hocus {
+      background-color: inherit;
+    }
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Default Button
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.btn--primary {
+  background-color: $palette-primary;
+  color: $palette-tertiary;
+
+  .btn__icon {
+    background-color: $palette-tertiary;
+
+    &:before,
+    &:after {
+      background-color: $palette-tertiary;
+    }
+  }
+
+  @include hocus() {
+    background-color: #12254A
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// Accent Button
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.btn--accent {
+  background-color: $palette-accent;
+  color: $palette-primary;
+
+  @include hocus() {
+    background-color: #FFFA85;
+  }
+
+  .btn__icon {
+    background-color: $palette-primary;
+
+    &:before,
+    &:after {
+      background-color: $palette-primary;
+    }
+  }
+}

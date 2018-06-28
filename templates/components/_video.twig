@@ -1,0 +1,34 @@
+{#
+ # Component: Video
+ # -------------------
+ #
+ #}
+
+  {% set videoBanner = component.videoBanner.one() %}
+<div class="js-component component component--video" data-header-colour="dark">
+  <div class="video js-inview">
+    <div class="video__row">
+
+      <div class="video__col">
+        <div class="video__wrap">
+
+          <a href="javascript:void(0)" class="video-banner js-video-play" data-bg="{{ videoBanner.getUrl() }}" data-video-src="{{ component.videoUrl }}" aria-label="Play this video">
+            <svg class="video-banner__action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" aria-labelledby="title" aria-describedby="description" role="img">
+              <title id="title">Play Icon</title>
+              <desc id="description">A Play Icon for the Video.</desc>
+                <path class="video-banner__path" d="M96 48A48 48 0 1 1 48 0a48 48 0 0 1 48 48z" />
+                <path fill="#fff" d="M69 48L37.5 66.19V29.81z" />
+            </svg>
+          </a>
+
+          <div class="video__video">
+            <div id="js-video" class="video__iframe">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

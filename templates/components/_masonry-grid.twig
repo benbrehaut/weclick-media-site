@@ -1,0 +1,37 @@
+{#
+ # Component: Masonry Grid
+ # -------------------
+ #
+ #}
+
+{% import "macros/_macros" as macros %}
+
+<div class="js-component component component--masonry-grid" data-header-colour="light">
+  <div class="masonry-grid">
+    {% for item in component.items.all() %}
+      {% set itemImage = item.itemImage.one() %}
+
+      <a href="{{ item.itemCTAUrl }}" class="js-inview masonry-grid-item" title="{{ item.itemTitle }}">
+        <div class="masonry-grid-item__image js-masonry-grid-item-image">
+          {% if itemImage|length %}
+            <img data-src="{{ itemImage.getUrl('masonryGrid') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ itemImage.getWidth('masonryGrid') }}" height="{{ itemImage.getHeight('masonryGrid') }}" alt="{{ item.itemTitle }}" class="js-lazyload">
+          {% endif %}
+        </div>
+        <div class="masonry-grid-item__content">
+          {{ macros.heading(3, item.itemTitle, 'masonry-grid-item__heading') }}
+          <p class="masonry-grid-item__copy">{{ item.itemCopy }}</p>
+
+          {% if item.itemCTAUrl %}
+            <span class="masonry-grid-item__cta">
+              {{ item.itemCTATitle|default('Read More') }}
+              
+              <span class="masonry-grid-item__icon" aria-hidden="true">
+              </span>
+            </span>
+          {% endif %}
+        </div>
+      </a>
+
+    {% endfor %}
+  </div>
+</div>

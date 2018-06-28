@@ -1,0 +1,246 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Object: _site-header
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+.site-header {
+  width: 100%;
+  padding-left: rem-calc(35);
+  padding-right: rem-calc(35);
+  background-color: transparent;
+  position: relative;
+
+  @include breakpoint(medium only) {
+    padding-left: rem-calc(15);
+    padding-right: rem-calc(15);
+    top: rem-calc(10);
+  }
+
+  @include breakpoint(small only) {
+    padding-left: rem-calc(3);
+    padding-right: rem-calc(3);
+    top: rem-calc(10);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: index($z-stack, hamburger);
+    width: 100%;
+    height: 80px;
+    background-color: $palette-primary;
+  }
+
+  svg {
+    fill: $palette-tertiary;
+    transition: all 0.4s ease-in-out;
+
+    @include breakpoint(small only) {
+      fill: $palette-tertiary !important;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  &__menu {
+    position: fixed;
+    top: 49px;
+    left: 32px;
+    z-index: index($z-stack, hamburger);
+
+    @include breakpoint(1340px down) {
+      left: 16px;
+    }
+
+    @include breakpoint(medium down) {
+      top: 14px;
+      left: 20px;
+    }
+
+    @include breakpoint(small down) {
+      left: 5px;
+    }
+  }
+
+  &__logo {
+    position: fixed;
+    top: 59px;
+    right: 32px;
+    z-index: index($z-stack, siteHeader);
+
+    @include breakpoint(1340px down) {
+      right: 16px;
+    }
+
+    @include breakpoint(medium down) {
+      top: 20px;
+      right: 20px;
+    }
+  }
+
+  &--light {
+    .hamburger-line {
+      background-color: $palette-tertiary;
+    }
+
+    svg {
+      fill: $palette-tertiary;
+    }
+
+    .site-header-toggler {
+      border: 2px solid $palette-tertiary;
+    }
+  }
+
+  body.pages-49 & {
+    .site-header-toggler,
+    .site-header__logo {
+      opacity: 0.5;
+
+      @include breakpoint(medium down) {
+        opacity: 1;
+
+        .hamburger-line {
+          background-color: $palette-primary;
+        }
+    
+        svg {
+          fill: $palette-primary;
+        }
+    
+        .site-header-toggler {
+          border: 2px solid $palette-primary;
+        }
+      }
+    }
+  }
+
+  &--primary,
+  &--is-showing {
+    .hamburger-line {
+      background-color: $palette-primary;
+    }
+    
+    svg {
+      fill: $palette-primary;
+    }
+
+    .site-header-toggler {
+      border: 2px solid $palette-primary;
+    }
+  }
+}
+
+.site-header-toggler {
+  position: relative;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  appearance: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-decoration: none;
+  line-height: normal;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+
+  @include breakpoint(small only) {
+    border: 0 !important;
+  }
+
+  @include breakpoint(medium up) {
+    &:hover {
+      background-color: $palette-accent;
+      border: 2px solid $palette-accent;
+      opacity: 1 !important;
+  
+      .hamburger-line {
+        opacity: 0;
+      }
+  
+      .site-header-toggler__text {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__text {
+    @include absolute-center;
+    font-family: $font-family-secondary;
+    font-size: rem-calc(8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+
+    .site-nav--is-active & {
+      opacity: 0 !important;
+    }
+  }
+
+  .site-nav--is-active & {
+    border-color: transparent;
+    opacity: 1 !important;
+  }
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  transform-orign: center;
+  margin-top: -3px;
+  transition: all 0.4s ease-in-out;
+  background-color: $palette-tertiary;
+
+  @include breakpoint(small only) {
+    background-color: $palette-tertiary !important;
+  }
+
+  .is-active & {
+    background-color: $palette-primary !important;
+  }
+  
+  &--top {
+    top: 20px;
+    
+    .is-active & {
+      transform: rotate(45deg);
+      top: 25px;
+      left: 13px;
+      opacity: 1 !important;
+    }
+  }
+  
+  &--middle {
+    top: 28px;
+    
+    .is-active & {
+      opacity: 0;
+    }
+  }
+  
+  &--bottom {
+    top: 36px;
+    
+    .is-active & {
+      transform: rotate(-45deg);
+      top: 25px;
+      left: 13px;
+      opacity: 1 !important;
+    }
+  }
+}
+
+.site-notice {
+  background-color: $palette-accent;
+  padding: rem-calc(20);
+}
